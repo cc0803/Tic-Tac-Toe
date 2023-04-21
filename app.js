@@ -1,26 +1,29 @@
-const buttonContainer = document.querySelector(".game-container");
-
 const Gameboard = (() => {
-    let gameboardArray = ["", "", "", "", "", "", "", "", ""];
-    let markers = ["X", "O"];
+    let gameArray = ["", "", "", "", "", "", "", "", ""];
 
-    const createButtons = () => {
-        removeOldButtons();
+    const displayBoard = () => {
+        // Create an index to later track which button corresponds to which array element
         let index = 0;
-        gameboardArray.forEach(element => {
+
+        gameArray.forEach(item => {
             let button = document.createElement("button");
             button.value = index;
+            button.textContent = gameArray[index];
+            document.querySelector(".game-container").appendChild(button);
             index++;
-            button.textContent = element;
-            buttonContainer.appendChild(button);
+        })  
+    }
+
+    const updateBoard = () => {
+        let buttons = document.querySelectorAll(".game-container>button");
+        buttons.forEach(button => {
+            button.textContent = gameArray[button.value];
         })
     }
 
-    const removeOldButtons = () => {
-        buttonContainer.innerHTML = "";
-    }
-    return {createButtons, gameboardArray};
+    return {displayBoard, updateBoard, gameArray};
 })();
+
 
 const Player = (m) => {
     const marker = m;
@@ -28,50 +31,30 @@ const Player = (m) => {
     return {marker};
 }
 
-const Gameflow = ((marker) => {
-    const players = [Player("X"), Player("0")];
+
+const Game = (() => {
+    let players = [Player("X"), Player("0")];
     let activePlayer = players[0];
 
-    const changeTurns = () => {
+    const switchPlayer = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     }
 
-    const placeMarker = () => {
+    const buttonListener = () => {
         let buttons = Array.from(document.querySelectorAll(".game-container>button"));
-
         buttons.forEach(button => {
             button.addEventListener("click", () => {
-                if (Gameboard.gameboardArray[button.value] === "") {
-                    Gameboard.gameboardArray[button.value] = activePlayer.marker;
-                    Gameboard.createButtons();
-                    changeTurns();
+                if (button.textContent === ""){
+                    Gameboard.gameArray[button.value] = activePlayer.marker;
+                    button.textContent = activePlayer.marker;
+                    Gameboard.updateBoard();
+                    switchPlayer();
                 }
             })
         })
     }
-
-    const createGame = () => {
-        Gameboard.createButtons();
-        placeMarker();
-    }
-
-    return {createGame};
+    return {buttonListener};
 })();
 
-Gameflow.createGame()
-
-
-// Gameboard
-    // GameArray
-    // displayUI
-
-// Player
-    // marker
-    // placemarker
-
-// Gameflow
-    // whos turn is it
-    // Player.placemarker
-    // Gameboard.displayUI
-    // check for winner
-    // change turns
+Gameboard.displayBoard()
+Game.buttonListener();
