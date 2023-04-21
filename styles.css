@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+}
+
+.game-container {
+    width: max(300px, 35vw);
+    height: max(300px, 35vw);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+}
+
+button {
+    background-color: gray;
+}
+
+.marker {
+    height: max(300px, 35vw);
+    width: max(50px, 10vw);
+    font-size: 4rem;
+    border-radius: 1rem;
+    background-color: #dfdfdf;
+}
+
+.marker:active {
+    background-color: #888;
+}
