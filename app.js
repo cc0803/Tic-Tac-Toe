@@ -33,7 +33,8 @@ const Player = (m) => {
 
 
 const Game = (() => {
-    let players = [Player("X"), Player("0")];
+    const gameArray = Gameboard.gameArray;
+    const players = [Player("X"), Player("0")];
     let activePlayer = players[0];
 
     const switchPlayer = () => {
@@ -48,11 +49,62 @@ const Game = (() => {
                     Gameboard.gameArray[button.value] = activePlayer.marker;
                     button.textContent = activePlayer.marker;
                     Gameboard.updateBoard();
+                    won();
                     switchPlayer();
                 }
             })
         })
     }
+
+    const checkIfFieldIsEmpty = (index) => {
+        if (gameArray[index] === ""){
+            return true;
+        } 
+        return false;
+    }
+
+    const won = () => {
+
+        for (let i = 0; i < gameArray.length; i++) {
+            if (!checkIfFieldIsEmpty(i)) {
+                if (
+                (i + 1) % 3 === 0 && 
+                gameArray[i] === gameArray[i - 1] && 
+                gameArray[i] === gameArray[i - 2]
+                ) {
+                    console.log(gameArray[i]);
+                    return gameArray[i];
+                } else if (
+                    i === 2 && 
+                    gameArray[i] === gameArray[i + 2] && 
+                    gameArray[i] === gameArray[i + 4]
+                    ){
+                    console.log(gameArray[i]);
+                    return gameArray[i];
+                } else if (
+                    i === 0 &&
+                    gameArray[i] === gameArray[i + 4] &&
+                    gameArray[i] === gameArray[i + 8]
+                ) {
+                    console.log(gameArray[i]);
+                    return gameArray[i];
+                } else if (
+                    i < 3 &&
+                    gameArray[i] === gameArray[i + 3] && 
+                    gameArray[i] === gameArray[i + 6]
+                ) {
+                    console.log(gameArray[i]);
+                    return gameArray[i];
+                }
+
+            }
+        }
+    }
+
+    const tie = () => {
+        
+    }
+
     return {buttonListener};
 })();
 
