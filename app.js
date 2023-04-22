@@ -51,19 +51,17 @@ const Game = (() => {
     let gameArray = Gameboard.gameArray;
     let players = [Player("X"), Player("0")];
     let activePlayer = players[0];
-
-    const selectPlayer = () => {
-        let markerButton = Array.from(document.querySelectorAll(".marker-container>.marker"));
-        markerButton.forEach(button => {
-            button.addEventListener("click", () => {
-                if (button.value === "X") {
-                    players = [Player("X"), Player("0")];
-                } else {
-                    players = [Player("0"), Player("X")];
-                }
-            })
+    
+    let markerButton = Array.from(document.querySelectorAll(".marker-container>.marker"));
+    markerButton.forEach(button => {
+        button.addEventListener("click", () => {
+            if (button.value === "0") {
+                activePlayer = players[1]
+            } else {
+                activePlayer = players[0]
+            }
         })
-    }
+    })
 
     const switchPlayer = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -148,9 +146,8 @@ const Game = (() => {
         }
     }
 
-    return {playGame, selectPlayer, players};
+    return {playGame};
 })();
 
-Game.selectPlayer();
 Gameboard.displayBoard()
 Game.playGame();
