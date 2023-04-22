@@ -52,16 +52,24 @@ const Game = (() => {
     let players = [Player("X"), Player("0")];
     let activePlayer = players[0];
     
-    let markerButton = Array.from(document.querySelectorAll(".marker-container>.marker"));
-    markerButton.forEach(button => {
-        button.addEventListener("click", () => {
-            if (button.value === "0") {
-                activePlayer = players[1]
-            } else {
-                activePlayer = players[0]
-            }
+    const selectPlayer = () => {
+        let markerButton = Array.from(document.querySelectorAll(".marker-container>.marker"));
+        markerButton.forEach(button => {
+            button.addEventListener("click", () => {
+                if (button.value === "0") {
+                    activePlayer = players[1]
+                    button.style.backgroundColor = "#888"
+                    markerButton[0].style.backgroundColor = "#dfdfdf"
+                } else {
+                    activePlayer = players[0]
+                    button.style.backgroundColor = "#888"
+                    markerButton[1].style.backgroundColor = "#dfdfdf"
+                }
+            }, {once: true})
         })
-    })
+    }
+    
+    selectPlayer();
 
     const switchPlayer = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
