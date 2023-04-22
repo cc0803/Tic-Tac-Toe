@@ -1,3 +1,8 @@
+const overlay = document.querySelector(".overlay");
+overlay.addEventListener("click", () => {
+    overlay.style.transform = "scale(0)";
+})
+
 const Gameboard = (() => {
     let gameArray = ["", "", "", "", "", "", "", "", ""];
 
@@ -50,6 +55,7 @@ const Game = (() => {
                     button.textContent = activePlayer.marker;
                     Gameboard.updateBoard();
                     won();
+                    tie();
                     switchPlayer();
                 }
             })
@@ -67,6 +73,7 @@ const Game = (() => {
 
         for (let i = 0; i < gameArray.length; i++) {
             if (!checkIfFieldIsEmpty(i)) {
+                // check for horizontal matches
                 if (
                 (i + 1) % 3 === 0 && 
                 gameArray[i] === gameArray[i - 1] && 
@@ -74,6 +81,7 @@ const Game = (() => {
                 ) {
                     console.log(gameArray[i]);
                     return gameArray[i];
+                // check for diagnol matches from upper right corner
                 } else if (
                     i === 2 && 
                     gameArray[i] === gameArray[i + 2] && 
@@ -81,6 +89,7 @@ const Game = (() => {
                     ){
                     console.log(gameArray[i]);
                     return gameArray[i];
+                // check for diagnol matches from upper left corner
                 } else if (
                     i === 0 &&
                     gameArray[i] === gameArray[i + 4] &&
@@ -88,6 +97,7 @@ const Game = (() => {
                 ) {
                     console.log(gameArray[i]);
                     return gameArray[i];
+                // check for vertical matches
                 } else if (
                     i < 3 &&
                     gameArray[i] === gameArray[i + 3] && 
@@ -102,7 +112,9 @@ const Game = (() => {
     }
 
     const tie = () => {
-        
+        if (!gameArray.map(x => checkIfFieldIsEmpty(x)).length) {
+            console.log("full");
+        }
     }
 
     return {buttonListener};

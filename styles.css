@@ -11,6 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 4rem;
+    position: relative;
 }
 
 .game-container {
@@ -37,4 +38,17 @@ button {
 
 .marker:active {
     background-color: #888;
+}
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 10;
+    background-color: #2227;
+    color: greenyellow;
+    font-size: 10rem;
+    display: grid;
+    place-items: center;
+    font-family: monospace, serif;
 }
