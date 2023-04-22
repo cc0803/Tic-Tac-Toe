@@ -1,6 +1,7 @@
 const overlay = document.querySelector(".overlay");
 overlay.addEventListener("click", () => {
     overlay.style.transform = "scale(0)";
+    Gameboard.resetGame();
 })
 
 const Gameboard = (() => {
@@ -26,7 +27,11 @@ const Gameboard = (() => {
         })
     }
 
-    return {displayBoard, updateBoard, gameArray};
+    const resetGame = () => {
+        location.reload();
+    }
+
+    return {displayBoard, updateBoard, gameArray, resetGame};
 })();
 
 
@@ -119,16 +124,10 @@ const Game = (() => {
         if (won() === "X"){
             overlay.textContent = "X Wins!!!"
             overlay.style.transform = "scale(1)"
-            setTimeout(resetGame(), 1000);
         } else if (won() === "0") {
             overlay.textContent = "O Wins!!!"
             overlay.style.transform = "scale(1)"
-            setTimeout(resetGame(), 1000);
         }
-    }
-    
-    const resetGame = () => {
-        gameArray = ["", "", "", "", "", "", "", "", ""];
     }
 
     return {playGame};
