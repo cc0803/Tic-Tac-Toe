@@ -46,9 +46,10 @@ button {
     position: absolute;
     z-index: 10;
     background-color: #2227;
-    color: greenyellow;
+    color: white;
     font-size: 10rem;
     display: grid;
     place-items: center;
     font-family: monospace, serif;
+    transform: scale(0);
 }

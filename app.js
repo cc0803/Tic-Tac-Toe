@@ -38,7 +38,7 @@ const Player = (m) => {
 
 
 const Game = (() => {
-    const gameArray = Gameboard.gameArray;
+    let gameArray = Gameboard.gameArray;
     const players = [Player("X"), Player("0")];
     let activePlayer = players[0];
 
@@ -46,7 +46,7 @@ const Game = (() => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     }
 
-    const buttonListener = () => {
+    const playGame = () => {
         let buttons = Array.from(document.querySelectorAll(".game-container>button"));
         buttons.forEach(button => {
             button.addEventListener("click", () => {
@@ -57,29 +57,30 @@ const Game = (() => {
                     won();
                     tie();
                     switchPlayer();
+                    displayResults();
                 }
             })
         })
     }
 
-    const checkIfFieldIsEmpty = (index) => {
-        if (gameArray[index] === ""){
+    const checkIfFieldIsEmpty = (element) => {
+        if (element === ""){
             return true;
-        } 
-        return false;
+        } else {
+            return false;
+        }
     }
 
     const won = () => {
 
         for (let i = 0; i < gameArray.length; i++) {
-            if (!checkIfFieldIsEmpty(i)) {
+            if (!checkIfFieldIsEmpty(gameArray[i])) {
                 // check for horizontal matches
                 if (
                 (i + 1) % 3 === 0 && 
                 gameArray[i] === gameArray[i - 1] && 
                 gameArray[i] === gameArray[i - 2]
                 ) {
-                    console.log(gameArray[i]);
                     return gameArray[i];
                 // check for diagnol matches from upper right corner
                 } else if (
@@ -87,7 +88,6 @@ const Game = (() => {
                     gameArray[i] === gameArray[i + 2] && 
                     gameArray[i] === gameArray[i + 4]
                     ){
-                    console.log(gameArray[i]);
                     return gameArray[i];
                 // check for diagnol matches from upper left corner
                 } else if (
@@ -95,7 +95,6 @@ const Game = (() => {
                     gameArray[i] === gameArray[i + 4] &&
                     gameArray[i] === gameArray[i + 8]
                 ) {
-                    console.log(gameArray[i]);
                     return gameArray[i];
                 // check for vertical matches
                 } else if (
@@ -103,22 +102,37 @@ const Game = (() => {
                     gameArray[i] === gameArray[i + 3] && 
                     gameArray[i] === gameArray[i + 6]
                 ) {
-                    console.log(gameArray[i]);
                     return gameArray[i];
                 }
-
             }
         }
     }
 
     const tie = () => {
-        if (!gameArray.map(x => checkIfFieldIsEmpty(x)).length) {
-            console.log("full");
+        if (gameArray.filter(x => checkIfFieldIsEmpty(x)).length === 0) {
+            overlay.textContent = "TIE";
+            overlay.style.transform = "scale(1)";
         }
     }
 
-    return {buttonListener};
+    const displayResults = () => {
+        if (won() === "X"){
+            overlay.textContent = "X Wins!!!"
+            overlay.style.transform = "scale(1)"
+            setTimeout(resetGame(), 1000);
+        } else if (won() === "0") {
+            overlay.textContent = "O Wins!!!"
+            overlay.style.transform = "scale(1)"
+            setTimeout(resetGame(), 1000);
+        }
+    }
+    
+    const resetGame = () => {
+        gameArray = ["", "", "", "", "", "", "", "", ""];
+    }
+
+    return {playGame};
 })();
 
 Gameboard.displayBoard()
-Game.buttonListener();
+Game.playGame();
