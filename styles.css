@@ -24,16 +24,17 @@ body {
 }
 
 button {
-    background-color: gray;
-    font-size: 2.5rem;
+    font-size: max(30px, 4vw);
+    border-radius: 1rem;
+    border: 3px solid #888;
 }
 
 .marker {
-    height: max(300px, 35vw);
+    height: max(150px, 17.5vw);
     width: max(50px, 10vw);
     font-size: 4rem;
-    border-radius: 1rem;
     background-color: #dfdfdf;
+    border: 2px solid black;
 }
 
 .marker:active {
@@ -52,4 +53,24 @@ button {
     place-items: center;
     font-family: monospace, serif;
     transform: scale(0);
+}
+
+.marker-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.marker-container button:first-child {
+    border-radius: 1rem 1rem 0 0;
+    border-bottom: 1px solid black;
+}
+
+.marker-container button:last-child {
+    border-radius: 0 0 1rem 1rem;
+    border-top: 1px solid black;
+}
+
+.start {
+    height: max(300px, 35vw);
+    font-size: max(30px, 3vw);
 }

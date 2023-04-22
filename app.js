@@ -4,6 +4,11 @@ overlay.addEventListener("click", () => {
     Gameboard.resetGame();
 })
 
+const restart = document.querySelector(".start")
+restart.addEventListener("click", () => {
+    location.reload();
+})
+
 const Gameboard = (() => {
     let gameArray = ["", "", "", "", "", "", "", "", ""];
 
@@ -44,8 +49,21 @@ const Player = (m) => {
 
 const Game = (() => {
     let gameArray = Gameboard.gameArray;
-    const players = [Player("X"), Player("0")];
+    let players = [Player("X"), Player("0")];
     let activePlayer = players[0];
+
+    const selectPlayer = () => {
+        let markerButton = Array.from(document.querySelectorAll(".marker-container>.marker"));
+        markerButton.forEach(button => {
+            button.addEventListener("click", () => {
+                if (button.value === "X") {
+                    players = [Player("X"), Player("0")];
+                } else {
+                    players = [Player("0"), Player("X")];
+                }
+            })
+        })
+    }
 
     const switchPlayer = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -130,8 +148,9 @@ const Game = (() => {
         }
     }
 
-    return {playGame};
+    return {playGame, selectPlayer, players};
 })();
 
+Game.selectPlayer();
 Gameboard.displayBoard()
 Game.playGame();
