@@ -158,16 +158,31 @@ const Game = (() => {
 
     const displayResults = () => {
         if (won() === "X"){
-            overlay.textContent = "X Wins!!!"
+            overlay.textContent = `${nameX} Wins!!!` 
             overlay.style.transform = "scale(1)"
         } else if (won() === "0") {
-            overlay.textContent = "O Wins!!!"
+            overlay.textContent = `${nameO} Wins!!!`
             overlay.style.transform = "scale(1)"
         }
     }
 
-    return {playGame};
+    let nameX;
+    let nameO;
+
+    const nameSubmit = () => {
+        const submitButton = document.querySelector("button[type='submit'");
+        submitButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            nameX = document.querySelector("#playerOne").value;
+            nameO = document.querySelector("#playerTwo").value;
+            document.querySelector(".form-container").style.transform = "scale(0)";
+            document.querySelector("body").style.pointerEvents = "all";
+        })
+    }
+
+    return {playGame, nameSubmit};
 })();
 
+Game.nameSubmit();
 Gameboard.displayBoard()
 Game.playGame();

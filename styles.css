@@ -12,6 +12,7 @@ body {
     align-items: center;
     gap: 4rem;
     position: relative;
+    pointer-events: none;
 }
 
 .game-container {
@@ -52,7 +53,7 @@ button {
     z-index: 10;
     background-color: #2227;
     color: white;
-    font-size: 10rem;
+    font-size: max(4rem, 4vw);
     display: grid;
     place-items: center;
     font-family: monospace, serif;
@@ -77,4 +78,60 @@ button {
 .start {
     height: max(300px, 35vw);
     font-size: max(30px, 3vw);
+}
+
+.form-container {
+    position: absolute;
+    z-index: 12;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background-color: #8888;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: all;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+}
+
+label {
+    font-family: monospace, serif;
+    font-size: max(0.8rem, 1.2vw);
+}
+
+input {
+    font-family: monospace, serif;
+    height: max(1.2rem, 2vw);
+    font-size: max(1rem, 1.5vw);
+}
+
+form {
+    width: 25vw;
+    height: 15vw;
+    background-color: burlywood;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button[type="submit"] {
+    font-family: monospace, serif;
+    font-size: max(1rem, 2vw);
+}
+
+button[type="submit"]:hover {
+    transform: scale(1.02);
+}
+
+button[type="submit"]:active {
+    background-color: #cfcfcf;
+    transform: scale(1);
 }
