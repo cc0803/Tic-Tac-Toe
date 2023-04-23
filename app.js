@@ -2,6 +2,8 @@ const overlay = document.querySelector(".overlay");
 overlay.addEventListener("click", () => {
     overlay.style.transform = "scale(0)";
     Gameboard.resetGame();
+    Gameboard.displayBoard();
+    Game.playGame();
 })
 
 const restart = document.querySelector(".start")
@@ -33,7 +35,12 @@ const Gameboard = (() => {
     }
 
     const resetGame = () => {
-        location.reload();
+        // First clear the inner html of the .game-container, so there isnt a second gameboard
+        document.querySelector(".game-container").innerHTML = "";
+
+        for (let i = 0; i < gameArray.length; i++){
+            gameArray[i] = "";
+        }
     }
 
     return {displayBoard, updateBoard, gameArray, resetGame};
@@ -60,10 +67,14 @@ const Game = (() => {
                     activePlayer = players[1]
                     button.style.backgroundColor = "#888"
                     markerButton[0].style.backgroundColor = "#dfdfdf"
+                    resetGame();
+                    Gameboard.displayBoard();
                 } else {
                     activePlayer = players[0]
                     button.style.backgroundColor = "#888"
                     markerButton[1].style.backgroundColor = "#dfdfdf"
+                    resetGame();
+                    Gameboard.updateBoard();
                 }
             }, {once: true})
         })
@@ -151,6 +162,12 @@ const Game = (() => {
         } else if (won() === "0") {
             overlay.textContent = "O Wins!!!"
             overlay.style.transform = "scale(1)"
+        }
+    }
+
+    const resetGame = () => {
+        for (let i = 0; i < Gameboard.gameArray.length; i++){
+            Gameboard.gameArray[i] = "";
         }
     }
 
