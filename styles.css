@@ -53,7 +53,7 @@ button {
     z-index: 10;
     background-color: #2227;
     color: white;
-    font-size: 10rem;
+    font-size: max(4rem, 4vw);
     display: grid;
     place-items: center;
     font-family: monospace, serif;
