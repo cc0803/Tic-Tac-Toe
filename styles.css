@@ -78,3 +78,43 @@ button {
     height: max(300px, 35vw);
     font-size: max(30px, 3vw);
 }
+
+.form-container {
+    position: absolute;
+    z-index: 12;
+    width: 25vw;
+    height: 15vw;
+    background-color: burlywood;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+}
+
+label {
+    font-family: monospace, serif;
+}
+
+input {
+    font-family: monospace, serif;
+    height: max(1.2rem, 2vw);
+    font-size: max(1rem, 1.5vw);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button[type="submit"] {
+    font-family: monospace, serif;
+    font-size: max(1rem, 2vw);
+}
