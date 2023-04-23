@@ -2,13 +2,11 @@ const overlay = document.querySelector(".overlay");
 overlay.addEventListener("click", () => {
     overlay.style.transform = "scale(0)";
     Gameboard.resetGame();
-    Gameboard.displayBoard();
-    Game.playGame();
 })
 
-const restart = document.querySelector(".start")
+const restart = document.querySelector(".start");
 restart.addEventListener("click", () => {
-    location.reload();
+    Gameboard.resetGame();
 })
 
 const Gameboard = (() => {
@@ -34,13 +32,18 @@ const Gameboard = (() => {
         })
     }
 
-    const resetGame = () => {
+    const clearBoard = () => {
         // First clear the inner html of the .game-container, so there isnt a second gameboard
         document.querySelector(".game-container").innerHTML = "";
-
         for (let i = 0; i < gameArray.length; i++){
             gameArray[i] = "";
         }
+    }
+
+    const resetGame = () => {
+        clearBoard();
+        displayBoard();
+        Game.playGame();
     }
 
     return {displayBoard, updateBoard, gameArray, resetGame};
@@ -67,26 +70,24 @@ const Game = (() => {
                     activePlayer = players[1]
                     button.style.backgroundColor = "#888"
                     markerButton[0].style.backgroundColor = "#dfdfdf"
-                    resetGame();
-                    Gameboard.displayBoard();
+                    Gameboard.resetGame();
                 } else {
                     activePlayer = players[0]
                     button.style.backgroundColor = "#888"
                     markerButton[1].style.backgroundColor = "#dfdfdf"
-                    resetGame();
-                    Gameboard.updateBoard();
+                    Gameboard.resetGame();
                 }
             }, {once: true})
         })
     }
-    
-    selectPlayer();
 
     const switchPlayer = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     }
 
     const playGame = () => {
+        // Running the selectPlayer method first, so Player can choose his marker without needing to click a gameboardfield
+        selectPlayer();
         let buttons = Array.from(document.querySelectorAll(".game-container>button"));
         buttons.forEach(button => {
             button.addEventListener("click", () => {
@@ -162,12 +163,6 @@ const Game = (() => {
         } else if (won() === "0") {
             overlay.textContent = "O Wins!!!"
             overlay.style.transform = "scale(1)"
-        }
-    }
-
-    const resetGame = () => {
-        for (let i = 0; i < Gameboard.gameArray.length; i++){
-            Gameboard.gameArray[i] = "";
         }
     }
 
